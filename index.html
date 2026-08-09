@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nandhana Rajeev — Data Analyst / Data Scientist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0B1120;
+    --bg-2: #0F1729;
+    --card: #121C31;
+    --card-2: #16223B;
+    --border: #223353;
+    --border-soft: #1A263F;
+    --text: #E9EEF7;
+    --text-2: #9AA7C2;
+    --text-3: #67759A;
+    --signal: #45E0C6;
+    --signal-dim: #1F4F49;
+    --flag: #F0A93A;
+    --flag-dim: #4A3A1A;
+    --danger: #E2665C;
+    --radius: 10px;
+    --maxw: 1080px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection{ background: var(--signal-dim); color: var(--signal); }
+
+  a{ color: inherit; text-decoration: none; }
+  .mono{ font-family: 'IBM Plex Mono', monospace; }
+  .wrap{ max-width: var(--maxw); margin: 0 auto; padding: 0 32px; }
+
+  h1,h2,h3{ font-family: 'Space Grotesk', sans-serif; font-weight: 600; letter-spacing: -0.01em; }
+
+  a:focus-visible, button:focus-visible{
+    outline: 2px solid var(--signal);
+    outline-offset: 3px;
+  }
+
+  /* ---------- NAV ---------- */
+  nav{
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(11,17,32,0.85);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border-soft);
+  }
+  nav .wrap{
+    height: 64px; display: flex; align-items: center; justify-content: space-between;
+  }
+  .brand{ display: flex; align-items: center; gap: 10px; font-family:'Space Grotesk'; font-weight:600; font-size: 15px; }
+  .brand .dot{
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--flag);
+    box-shadow: 0 0 0 4px var(--flag-dim);
+  }
+  .navlinks{ display: flex; gap: 28px; font-size: 14px; color: var(--text-2); }
+  .navlinks a:hover{ color: var(--signal); }
+  .navcta{
+    font-size: 13px; padding: 8px 16px; border: 1px solid var(--border);
+    border-radius: var(--radius); color: var(--text);
+  }
+  .navcta:hover{ border-color: var(--signal); color: var(--signal); }
+  @media (max-width: 720px){ .navlinks{ display:none; } }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position: relative;
+    padding: 96px 0 72px;
+    overflow: hidden;
+    border-bottom: 1px solid var(--border-soft);
+  }
+  #scatter{
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    opacity: 0.9;
+  }
+  .hero-content{ position: relative; z-index: 2; max-width: 640px; }
+  .eyebrow{
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: 'IBM Plex Mono'; font-size: 12px; color: var(--flag);
+    background: var(--flag-dim); border: 1px solid #5C4520;
+    padding: 5px 10px; border-radius: 20px; margin-bottom: 22px;
+  }
+  .eyebrow .pulse{
+    width: 6px; height: 6px; border-radius: 50%; background: var(--flag);
+    animation: pulse 1.6s ease-in-out infinite;
+  }
+  @keyframes pulse{
+    0%,100%{ opacity:1; transform:scale(1); }
+    50%{ opacity:0.4; transform:scale(1.4); }
+  }
+  .hero h1{
+    font-size: 44px; line-height: 1.15; margin-bottom: 18px;
+  }
+  .hero h1 span{ color: var(--signal); }
+  .hero p{
+    font-size: 16px; color: var(--text-2); max-width: 520px; margin-bottom: 30px;
+  }
+  .hero-actions{ display: flex; gap: 12px; flex-wrap: wrap; }
+  .btn{
+    font-size: 14px; font-weight: 500; padding: 11px 20px; border-radius: var(--radius);
+    display: inline-flex; align-items: center; gap: 8px;
+    transition: transform .12s ease;
+  }
+  .btn-primary{ background: var(--signal); color: #06231E; }
+  .btn-primary:hover{ transform: translateY(-1px); }
+  .btn-ghost{ border: 1px solid var(--border); color: var(--text); }
+  .btn-ghost:hover{ border-color: var(--text-2); }
+
+  @media (max-width: 640px){
+    .hero{ padding: 64px 0 48px; }
+    .hero h1{ font-size: 32px; }
+  }
+
+  /* ---------- SECTION SHARED ---------- */
+  section{ padding: 72px 0; border-bottom: 1px solid var(--border-soft); }
+  .section-head{ display:flex; align-items:baseline; gap:14px; margin-bottom: 40px; }
+  .section-tag{ font-family:'IBM Plex Mono'; font-size: 12px; color: var(--text-3); }
+  .section-head h2{ font-size: 24px; }
+
+  .reveal{ opacity: 0; transform: translateY(14px); transition: opacity .5s ease, transform .5s ease; }
+  .reveal.in{ opacity: 1; transform: translateY(0); }
+
+  /* ---------- ABOUT ---------- */
+  .about-grid{ display: grid; grid-template-columns: 1.4fr 1fr; gap: 48px; }
+  .about-grid p{ color: var(--text-2); margin-bottom: 16px; font-size: 15px; }
+  .stat-list{ display: flex; flex-direction: column; gap: 18px; }
+  .stat{ border-left: 2px solid var(--signal); padding-left: 14px; }
+  .stat .num{ font-family:'Space Grotesk'; font-size: 22px; font-weight: 600; }
+  .stat .lbl{ font-size: 13px; color: var(--text-3); }
+  @media (max-width: 780px){ .about-grid{ grid-template-columns: 1fr; } }
+
+  /* ---------- EXPERIENCE ---------- */
+  .timeline{ display: flex; flex-direction: column; }
+  .tl-item{
+    display: grid; grid-template-columns: 140px 1fr; gap: 24px;
+    padding: 26px 0; border-top: 1px solid var(--border-soft);
+  }
+  .tl-item:first-child{ border-top: none; }
+  .tl-date{ font-family:'IBM Plex Mono'; font-size: 12px; color: var(--text-3); padding-top: 3px; }
+  .tl-role{ font-size: 17px; font-weight: 600; margin-bottom: 2px; }
+  .tl-org{ font-size: 14px; color: var(--signal); margin-bottom: 12px; }
+  .tl-item ul{ list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .tl-item li{ font-size: 14px; color: var(--text-2); position: relative; padding-left: 16px; }
+  .tl-item li::before{
+    content: ''; position: absolute; left: 0; top: 8px;
+    width: 5px; height: 5px; border-radius: 50%; background: var(--border);
+  }
+
+  /* ---------- PROJECTS ---------- */
+  .proj-grid{ display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .proj-card{
+    background: var(--card); border: 1px solid var(--border-soft); border-radius: 14px;
+    padding: 22px; display: flex; flex-direction: column; gap: 12px;
+    transition: border-color .15s ease, transform .15s ease;
+  }
+  .proj-card:hover{ border-color: var(--border); transform: translateY(-2px); }
+  .proj-id{ font-family:'IBM Plex Mono'; font-size: 11px; color: var(--text-3); }
+  .proj-card h3{ font-size: 16px; }
+  .proj-card p{ font-size: 13.5px; color: var(--text-2); flex: 1; }
+  .proj-tags{ display: flex; flex-wrap: wrap; gap: 6px; }
+  .tag{
+    font-family:'IBM Plex Mono'; font-size: 11px; color: var(--text-2);
+    border: 1px solid var(--border); padding: 3px 8px; border-radius: 20px;
+  }
+  @media (max-width: 900px){ .proj-grid{ grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 600px){ .proj-grid{ grid-template-columns: 1fr; } }
+
+  /* ---------- SKILLS ---------- */
+  .skills-grid{ display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+  .skill-group h3{
+    font-size: 12px; font-family:'IBM Plex Mono'; color: var(--text-3);
+    text-transform: uppercase; letter-spacing: .06em; margin-bottom: 16px;
+  }
+  .skill-group ul{ list-style:none; display:flex; flex-direction:column; gap: 10px; }
+  .skill-group li{ font-size: 14px; color: var(--text); display:flex; align-items:center; gap:10px; }
+  .skill-group li::before{ content:''; width:4px; height:4px; background:var(--signal); border-radius:50%; flex-shrink:0; }
+  @media (max-width: 780px){ .skills-grid{ grid-template-columns: 1fr; } }
+
+  /* ---------- CERTS ---------- */
+  .cert-list{ display: flex; flex-direction: column; }
+  .cert-row{
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 16px 0; border-top: 1px solid var(--border-soft); font-size: 14px;
+  }
+  .cert-row:first-child{ border-top: none; }
+  .cert-row span:last-child{ color: var(--text-3); font-family:'IBM Plex Mono'; font-size: 12px; }
+
+  /* ---------- CONTACT ---------- */
+  .contact{ border-bottom: none; text-align: center; padding: 88px 0; }
+  .contact h2{ font-size: 30px; margin-bottom: 14px; }
+  .contact p{ color: var(--text-2); margin-bottom: 32px; }
+  .contact-links{ display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+  footer{ padding: 28px 0; text-align: center; font-size: 12px; color: var(--text-3); font-family:'IBM Plex Mono'; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="brand"><span class="dot"></span>N. Rajeev</div>
+    <div class="navlinks">
+      <a href="#about">About</a>
+      <a href="#education">Education</a>
+      <a href="#experience">Experience</a>
+      <a href="#projects">Projects</a>
+      <a href="#skills">Skills</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <a class="navcta" href="mailto:nandhanarajeev03@gmail.com">Get in touch</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <canvas id="scatter"></canvas>
+  <div class="wrap hero-content">
+    <div class="eyebrow"><span class="pulse"></span>case_0091 — flagged for review</div>
+    <h1>Finding the signal<br>in the <span>noise</span>.</h1>
+    <p>I'm Nandhana Rajeev — a data analyst who spends her days spotting the transaction that doesn't belong in a sea of millions that do. Now looking to bring that same pattern-recognition, statistics, and ML instinct to data science.</p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="mailto:nandhanarajeev03@gmail.com">Say hello ↗</a>
+      <a class="btn btn-ghost" href="https://www.linkedin.com/" target="_blank" rel="noopener">LinkedIn</a>
+      <a class="btn btn-ghost" href="#projects">View projects</a>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap">
+    <div class="section-head reveal"><span class="section-tag">01 / profile</span><h2>About</h2></div>
+    <div class="about-grid">
+      <div class="reveal">
+        <p>I currently work as a Fraud Risk Management Analyst at Dhanlaxmi Bank, where I monitor transaction streams across multiple risk systems, tune detection rules, and make real-time calls that protect customer funds. It's applied statistics and pattern detection under pressure — just without the "data science" label on the door.</p>
+        <p>Before that, I completed an M.Sc. in Data Science at CHRIST University, and spent time at the India Meteorological Department building ML and LLM-based tools that translate weather models into advisories farmers can actually act on. That mix — rigorous methodology plus making the output useful for a real person — is what I want to keep doing.</p>
+      </div>
+      <div class="stat-list reveal">
+        <div class="stat"><div class="num">M.Sc.</div><div class="lbl">Data Science, CHRIST University</div></div>
+        <div class="stat"><div class="num">3</div><div class="lbl">Risk &amp; monitoring systems worked across daily</div></div>
+        <div class="stat"><div class="num">2</div><div class="lbl">ML/AI internships — IMD &amp; Unipolar Technologies</div></div>
+        <div class="stat"><div class="num">EN · ML · HI · TA</div><div class="lbl">Languages spoken</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="education">
+  <div class="wrap">
+    <div class="section-head reveal"><span class="section-tag">02 / education</span><h2>Education</h2></div>
+    <div class="timeline">
+      <div class="tl-item reveal">
+        <div class="tl-date">Aug 2023 — Jun 2025</div>
+        <div>
+          <div class="tl-role">M.Sc. Data Science</div>
+          <div class="tl-org">CHRIST (Deemed to be University), Pune Lavasa Campus</div>
+        </div>
+      </div>
+      <div class="tl-item reveal">
+        <div class="tl-date">Aug 2020 — Apr 2023</div>
+        <div>
+          <div class="tl-role">B.Sc. Mathematics with Statistics and Computer Science</div>
+          <div class="tl-org">St. Thomas College (Autonomous), Thrissur</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="wrap">
+    <div class="section-head reveal"><span class="section-tag">03 / experience</span><h2>Experience</h2></div>
+    <div class="timeline">
+      <div class="tl-item reveal">
+        <div class="tl-date">Aug 2025 — present</div>
+        <div>
+          <div class="tl-role">Fraud Risk Management Analyst (Senior Officer)</div>
+          <div class="tl-org">Dhanlaxmi Bank</div>
+          <ul>
+            <li>Monitor and analyze transaction patterns across Cross Fraud, NPCI, and Visa Risk Manager to identify suspicious activity, acting on findings through CBS-level controls.</li>
+            <li>Contribute to regulatory system upgrades and integrations, including I4C integration, FRI integration (DoT-aligned), NCCRP integration, UEBT complaint-lodging, credit card integration, CBS integration, and the new DPIP project.</li>
+            <li>Lead UAT for fraud-system updates and author SOPs, PDCs, and BRDs to standardize processes.</li>
+            <li>Continuously refine detection rules to reduce false positives while holding detection accuracy steady.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="tl-item reveal">
+        <div class="tl-date">Feb 2025 — May 2025</div>
+        <div>
+          <div class="tl-role">Software Developer Intern</div>
+          <div class="tl-org">Unipolar Technologies Pvt Ltd</div>
+          <ul>
+            <li>Built responsive web applications using React, Node.js, and MySQL for backend data management.</li>
+            <li>Collaborated with the IT team on client-facing features from spec through deployment.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="tl-item reveal">
+        <div class="tl-date">Oct 2024 — May 2025</div>
+        <div>
+          <div class="tl-role">AI Research Intern</div>
+          <div class="tl-org">India Meteorological Department (IMD)</div>
+          <ul>
+            <li>Developed ML and LLM-based tools to automate region-specific weather advisories for farmers.</li>
+            <li>Translated technical forecast data into plain-language, farmer-friendly guidance across diverse Indian geographies.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap">
+    <div class="section-head reveal"><span class="section-tag">04 / projects</span><h2>Projects</h2></div>
+    <div class="proj-grid">
+      <div class="proj-card reveal">
+        <span class="proj-id">case_001</span>
+        <h3>Real-time exploratory data analysis toolkit</h3>
+        <p>A Python workflow for fast, dynamic EDA — automated summary stats, distribution checks, and visual reporting to speed up early-stage insight extraction on new datasets.</p>
+        <div class="proj-tags"><span class="tag">python</span><span class="tag">pandas</span><span class="tag">matplotlib</span></div>
+      </div>
+      <div class="proj-card reveal">
+        <span class="proj-id">case_002</span>
+        <h3>Movie recommendation engine</h3>
+        <p>Content-based recommendation system built with Django and LLMs for Hackverse 2024 — finalist entry, matching viewer preferences to films using text-embedding similarity.</p>
+        <div class="proj-tags"><span class="tag">django</span><span class="tag">llm</span><span class="tag">recommender systems</span></div>
+      </div>
+      <div class="proj-card reveal">
+        <span class="proj-id">case_003</span>
+        <h3>Assistive hand-gesture detection (IoT)</h3>
+        <p>1st place, IoT project competition. A gesture-recognition system letting bedridden patients trigger alerts and requests without needing to speak or reach for a call button.</p>
+        <div class="proj-tags"><span class="tag">iot</span><span class="tag">computer vision</span><span class="tag">healthcare</span></div>
+      </div>
+      <div class="proj-card reveal">
+        <span class="proj-id">case_004</span>
+        <h3>Java ML data pipeline</h3>
+        <p>An end-to-end pipeline in Java for cleaning, transforming, and visualizing raw data, built to demonstrate ML tooling outside the usual Python ecosystem.</p>
+        <div class="proj-tags"><span class="tag">java</span><span class="tag">data pipeline</span><span class="tag">ml</span></div>
+      </div>
+      <div class="proj-card reveal">
+        <span class="proj-id">case_005</span>
+        <h3>Visual storytelling with Power BI</h3>
+        <p>Hackverse '23 Viz Hacks entry — turned a raw dataset into an interactive dashboard designed to make the underlying trend legible at a glance, not just accurate.</p>
+        <div class="proj-tags"><span class="tag">power bi</span><span class="tag">data viz</span></div>
+      </div>
+      <div class="proj-card reveal" style="border-style:dashed; align-items:center; justify-content:center; text-align:center;">
+        <span class="proj-id">case_006</span>
+        <h3>Your next project goes here</h3>
+        <p>Swap this card for a fresh Kaggle notebook, a fraud-analytics side project, or anything with a GitHub link and a real metric attached.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <div class="section-head reveal"><span class="section-tag">05 / toolkit</span><h2>Skills</h2></div>
+    <div class="skills-grid">
+      <div class="skill-group reveal">
+        <h3>Languages &amp; core</h3>
+        <ul>
+          <li>Python</li>
+          <li>SQL</li>
+          <li>R</li>
+          <li>Java</li>
+          <li>Mathematics &amp; statistics</li>
+        </ul>
+      </div>
+      <div class="skill-group reveal">
+        <h3>Data &amp; ML</h3>
+        <ul>
+          <li>Pandas / NumPy / Matplotlib</li>
+          <li>Power BI / Excel</li>
+          <li>Machine learning fundamentals</li>
+          <li>LLMs &amp; prompt engineering</li>
+          <li>Snowflake</li>
+          <li>Fraud &amp; anomaly detection</li>
+        </ul>
+      </div>
+      <div class="skill-group reveal">
+        <h3>Web &amp; tools</h3>
+        <ul>
+          <li>Django</li>
+          <li>React / Node.js</li>
+          <li>Figma</li>
+          <li>Git</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="certs">
+  <div class="wrap">
+    <div class="section-head reveal"><span class="section-tag">06 / certificates</span><h2>Certificates</h2></div>
+    <div class="cert-list reveal">
+      <div class="cert-row"><span>Intro to Snowflake for Devs, Data Scientists, Data Engineers</span><span>Snowflake · May 2026</span></div>
+      <div class="cert-row"><span>Data Science Intern</span><span>Cognifyz Technologies · Jun 2024</span></div>
+      <div class="cert-row"><span>Hackverse '24</span><span>CHRIST Infotech · Nov 2024</span></div>
+      <div class="cert-row"><span>Prompt Engineering for Everyone</span><span>Cognitive Class · Jun 2024</span></div>
+      <div class="cert-row"><span>Google Cloud Career Readiness — Cloud Digital Leader Track</span><span>Google Cloud · Apr 2024</span></div>
+      <div class="cert-row"><span>Hackverse '23 — Viz Hacks</span><span>CHRIST Infotech · Nov 2023</span></div>
+      <div class="cert-row"><span>Foundations: Data, Data, Everywhere</span><span>Google · Jun 2023</span></div>
+      <div class="cert-row"><span>Python 101 for Data Science (PY0101EN)</span><span>IBM · Jul 2023</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="wrap">
+    <h2 class="reveal">Let's find the signal together.</h2>
+    <p class="reveal">Open to data analyst and data science roles — always happy to talk about a dataset, a role, or just fraud detection war stories.</p>
+    <div class="contact-links reveal">
+      <a class="btn btn-primary" href="mailto:nandhanarajeev03@gmail.com">nandhanarajeev03@gmail.com</a>
+      <a class="btn btn-ghost" href="tel:+918590207768">+91 85902 07768</a>
+      <a class="btn btn-ghost" href="https://www.linkedin.com/" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+  </div>
+</section>
+
+<footer>Thrissur, Kerala, India — built by Nandhana Rajeev</footer>
+
+<script>
+(function(){
+  var canvas = document.getElementById('scatter');
+  var ctx = canvas.getContext('2d');
+  var hero = document.querySelector('.hero');
+  var w, h, dots, flaggedIndex, t = 0;
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function resize(){
+    w = canvas.width = hero.offsetWidth * devicePixelRatio;
+    h = canvas.height = hero.offsetHeight * devicePixelRatio;
+    canvas.style.width = hero.offsetWidth + 'px';
+    canvas.style.height = hero.offsetHeight + 'px';
+    var count = Math.floor((hero.offsetWidth * hero.offsetHeight) / 9000);
+    dots = [];
+    for (var i = 0; i < count; i++){
+      dots.push({
+        x: Math.random() * w,
+        y: Math.random() * h,
+        r: (Math.random() * 1.4 + 0.8) * devicePixelRatio,
+        vx: (Math.random() - 0.5) * 0.12 * devicePixelRatio,
+        vy: (Math.random() - 0.5) * 0.12 * devicePixelRatio
+      });
+    }
+    flaggedIndex = Math.floor(dots.length * 0.62);
+  }
+
+  function draw(){
+    ctx.clearRect(0, 0, w, h);
+    for (var i = 0; i < dots.length; i++){
+      var d = dots[i];
+      if (!reduceMotion){
+        d.x += d.vx; d.y += d.vy;
+        if (d.x < 0 || d.x > w) d.vx *= -1;
+        if (d.y < 0 || d.y > h) d.vy *= -1;
+      }
+      var isFlag = i === flaggedIndex;
+      ctx.beginPath();
+      ctx.arc(d.x, d.y, isFlag ? d.r * 2.4 : d.r, 0, Math.PI * 2);
+      if (isFlag){
+        var pulse = 0.6 + Math.sin(t / 22) * 0.4;
+        ctx.fillStyle = 'rgba(240,169,58,' + pulse + ')';
+      } else {
+        ctx.fillStyle = 'rgba(148,163,196,0.35)';
+      }
+      ctx.fill();
+    }
+    t++;
+    requestAnimationFrame(draw);
+  }
+
+  window.addEventListener('resize', resize);
+  resize();
+  draw();
+
+  var revealEls = document.querySelectorAll('.reveal');
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if (entry.isIntersecting){
+        entry.target.classList.add('in');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  revealEls.forEach(function(el){ io.observe(el); });
+})();
+</script>
+
+</body>
+</html>
